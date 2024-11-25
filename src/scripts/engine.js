@@ -18,6 +18,27 @@ const state = {
     },
 };
 
+const pathImages = ".scr/assets/icons/";
+
+const cardData = [
+    {
+        id:1,
+        name: "Dark Magician",
+        type: "Rock",
+        img: '${pathImages}"magician.png"',
+        WinOf:[1], //De quem a carta ganha
+        LoseOf:[2] //De quem a carta perde
+    },
+    {
+        id:2,
+        name: "Exodia",
+        type: "Scissors",
+        img: '${pathImages}"exodia.png"',
+        WinOf:[0], //De quem a carta ganha
+        LoseOf:[1] //De quem a carta perde
+    },
+];
+
 // const players = {
 //     player1: "player-cards",
 // };
