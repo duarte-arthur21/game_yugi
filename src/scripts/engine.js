@@ -9,7 +9,7 @@ const state = {
         name: document.getElementById("card-name"),
         type: document.getElementById("card-type"),
     },
-    fielCards: {
+    fieldCards: {
         player: document.getElementById("player-field-card"),
         computer: document.getElementById("computer-field-card"),
     },
@@ -81,16 +81,38 @@ async function setCardsField(cardId) {
     await removeAllCardsImages();
 
     let computerCardId = await getRandomCardId();
+    let duelResults = await checkDuelResults(cardId, computerCardId)
+    
+    await drawCardsInField(cardId, computerCardId);
+    
+    await showHiddenCardFieldsImages(true)
+    await hiddenCardDetails();
 
-    state.fieldCards.player.style.display = "block";
-    state.fieldCards.computer.style.display = "block";
+    await updateScore();
+    await drawButton(duelResults);    
+}
 
+async function drawCardsInField(cardId, computerCardId){   
     state.fieldCards.player.src = cardData[cardId].img;
     state.fieldCards.computer.src = cardData[computerCardId].img;
 
-   
-    await updateScore();
-    await drawButton(duelResults);    
+}
+async function showHiddenCardFieldsImages(value) {
+    if (value == true) {
+        state.fieldCards.player.style.display = "block";
+        state.fieldCards.computer.style.display = "block";
+    }
+
+    if (value == false){
+        state.fieldCards.player.style.display = "none";
+        state.fieldCards.computer.style.display = "none";
+    
+    }
+}
+async function  hiddenCardDetails() {
+    state.cardSprites.avatar.src = "";
+    state.cardSprites.name.innerText = "";
+    state.cardSprites.type.innerText = "";
 }
 async function drawButton(text){
     state.actions.button.innerText = text.toUpperCase();
@@ -148,8 +170,8 @@ async function resetDuel() {
     state.cardSprites.avatar.src = "";
     state.actions.button.style.display = "none";
 
-    state.fielCards.player.style.display = "none";
-    state.fielCards.computer.style.display = "none";
+    state.fieldCards.player.style.display = "none";
+    state.fieldCards.computer.style.display = "none";
 
     init();
 }
@@ -165,6 +187,8 @@ async function playAudio(status) {
     }
 }
 function init() {
+    showHiddenCardFieldsImages();
+  
     drawCards(5, playerSides.player1);
     drawCards(5, playerSides.computer);
 };
