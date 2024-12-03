@@ -24,31 +24,38 @@ const state = {
     },
 };
 
+// const players = {
+//     player1: "player-cards",
+// };
 
 const pathImages = "./src/assets/icons/";
 
 const cardData = [
     {
-        id:1,
-        name: "Dark Magician",
-        type: "Rock",
-        img: '${pathImages}"magician.png"',
+        id: 0,
+        name: "Blue Eyes White Dragon",
+        type: "Paper",
+        img: `${pathImages}dragon.png`,
         WinOf:[1], //De quem a carta ganha
         LoseOf:[2] //De quem a carta perde
     },
     {
-        id:2,
+        id: 1,
+        name: "Dark Magician",
+        type: "Rock",
+        img: `${pathImages}magician.png`,
+        WinOf: [2], //De quem a carta ganha
+        LoseOf: [0] //De quem a carta perde
+    },
+    {
+        id: 2,
         name: "Exodia",
         type: "Scissors",
-        img: '${pathImages}"exodia.png"',
-        WinOf:[0], //De quem a carta ganha
-        LoseOf:[1] //De quem a carta perde
+        img: `${pathImages}exodia.png`,
+        WinOf: [0], //De quem a carta ganha
+        LoseOf: [1] //De quem a carta perde
     },
 ];
-
-// const players = {
-//     player1: "player-cards",
-// };
 
 // Função que retorna uma valor aleatório
 async function getRandomCardId() {
@@ -63,7 +70,7 @@ async function createCardImage(IdCard, fieldSide) {
     cardImage.setAttribute("data-id", IdCard);
     cardImage.classList.add("card");
 
-    if(fieldSide === playerSides.player1){
+    if(fieldSide === state.playerSides.player1){
         cardImage.addEventListener("click", ()=>{
             setCardsField(cardImage.getAttribute("data-id"));
         });
@@ -187,10 +194,10 @@ async function playAudio(status) {
     }
 }
 function init() {
-    showHiddenCardFieldsImages(false);
+    showHiddenCardFieldsImages();
   
-    drawCards(5, playerSides.player1);
-    drawCards(5, playerSides.computer);
+    drawCards(5, state.playerSides.player1);
+    drawCards(5, state.playerSides.computer);
 
     const bgm = document.getElementById("bgm");
     bgm.play();
